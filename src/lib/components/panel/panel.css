@@ -1,0 +1,20 @@
+:root {
+  --panel: url('../../assets/panel.png');
+  --panel-slice-x: 8;
+  --panel-slice-y: 8;
+  --pixel-upscale: 4;
+}
+
+.panel {
+  border-image-source: var(--panel);
+  border-image-slice: var(--panel-slice-y) var(--panel-slice-x) fill;
+  border-image-width: calc(var(--panel-slice-y) * var(--pixel-upscale) * 1px)
+    calc(var(--panel-slice-x) * var(--pixel-upscale) * 1px);
+
+  border-image-repeat: repeat;
+}
+
+.panel-snug {
+  padding: calc(var(--panel-slice-y) * var(--pixel-upscale) * 1px)
+    calc(var(--panel-slice-x) * var(--pixel-upscale) * 1px);
+}

@@ -1,0 +1,5 @@
+id: /game/demo
+title: A demo game
+description: Unlock a gear when you complete the game
+url: https://123ishatest.itch.io/itch-test
+saveKey: js-bridge

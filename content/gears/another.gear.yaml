@@ -1,0 +1,8 @@
+id: /gear/another
+game: /game/demo
+size: 1
+frames:
+  - bronze-b-0.png
+  - bronze-b-1.png
+  - bronze-b-2.png
+  - bronze-b-3.png

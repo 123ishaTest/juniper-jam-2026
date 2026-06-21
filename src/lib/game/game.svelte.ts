@@ -1,0 +1,20 @@
+import { LudiekEngine, LudiekGame } from '@123ishatest/ludiek';
+import { GameSchema } from '$lib/game/features/game-manager/Game.content';
+import { GameManager } from '$lib/game/features/game-manager/GameManager.svelte';
+import { GearGrid } from '$lib/game/features/gear-grid/GearGrid.svelte';
+import { GearSchema } from '$lib/game/features/gear-grid/Gear.content';
+
+export const engine = new LudiekEngine({
+  features: [new GameManager(), new GearGrid()],
+  content: [
+    { kind: 'game', schema: GameSchema },
+    { kind: 'gear', schema: GearSchema },
+  ],
+  debug: true,
+});
+
+export const game = new LudiekGame(engine, {
+  saveInterval: 10,
+  saveKey: '@123ishatest/juniper-jam-2026-metagame',
+  tickDuration: 1,
+});

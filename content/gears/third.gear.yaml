@@ -1,0 +1,8 @@
+id: /gear/third
+game: /game/demo
+size: 3
+frames:
+  - bronze-c-0.png
+  - bronze-c-1.png
+  - bronze-c-2.png
+  - bronze-c-3.png

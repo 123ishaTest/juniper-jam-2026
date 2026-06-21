@@ -14,6 +14,11 @@ export default defineConfig({
       adapter: adapter(),
     }),
   ],
+  server: {
+    watch: {
+      ignored: ['**/.louter/**'],
+    },
+  },
   test: {
     expect: { requireAssertions: true },
     projects: [
