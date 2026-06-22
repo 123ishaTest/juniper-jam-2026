@@ -1,9 +1,10 @@
 <script lang="ts">
   import { engine, game } from '$lib/game/game.svelte';
-  import GearOverview from '$lib/components/GearOverview.svelte';
   import GearGrid from '$lib/components/GearGrid.svelte';
   import { DragDropProvider } from '@dnd-kit/svelte';
   import { onMount } from 'svelte';
+  import Panel from '$lib/components/panel/Panel.svelte';
+  import GearOverview from '$lib/components/GearOverview.svelte';
 
   let { data } = $props();
 
@@ -45,13 +46,14 @@
   }
 </script>
 
-<div class="flex flex-row h-full space-x-8 pl-8">
-  <DragDropProvider {onDragEnd}>
-    <div class="flex-1 min-w-0 min-h-0">
+<DragDropProvider {onDragEnd}>
+  <div class="flex flex-row h-full space-x-8 pl-8">
+    <Panel className="grow">
       <GearGrid />
-    </div>
-    <div class="flex flex-col space-y-8 min-w-96 h-full">
+    </Panel>
+
+    <Panel>
       <GearOverview />
-    </div>
-  </DragDropProvider>
-</div>
+    </Panel>
+  </div>
+</DragDropProvider>

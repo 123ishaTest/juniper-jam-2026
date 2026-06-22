@@ -1,6 +1,6 @@
-id: /gear/example
+id: /gear/blue
 game: /game/demo
-size: 2
+size: 1
 frames:
   - bronze-a-0.png
   - bronze-a-1.png

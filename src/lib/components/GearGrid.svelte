@@ -49,7 +49,8 @@
 
           {#if tile.gear}
             <div class="absolute">
-              <DraggableGear gearId={tile.gear} {cellSize} />
+              <!-- TODO(@Isha): Add flexible gears-->
+              <DraggableGear fps={6} gearId={tile.gear} {cellSize} />
             </div>
           {/if}
         </div>

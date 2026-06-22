@@ -9,10 +9,10 @@
 }
 
 @font-face {
-  font-family: HeadCapital;
-  src: url('/assets/font/HeadCapitalBoldGrunge.otf');
+  font-family: PressStart;
+  src: url('/assets/font/PressStart2P-Regular.ttf');
 }
 
-* {
-  font-family: 'HeadCapital';
+@theme {
+  --font-primary: 'PressStart';
 }

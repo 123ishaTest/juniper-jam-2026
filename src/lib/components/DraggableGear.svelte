@@ -4,17 +4,15 @@
   import { engine } from '$lib/game/game.svelte';
 
   interface Props {
+    fps: number;
     cellSize: number;
     gearId: string;
   }
 
-  let { cellSize, gearId }: Props = $props();
+  let { fps, cellSize, gearId }: Props = $props();
 
   let gear = $derived(engine.contentManager.get(gearId, 'gear'));
   const draggable = $derived(createDraggable({ id: gear.id }));
-
-  // TODO(@Isha): Make speed custom
-  let fps = $state(6);
 
   let size = $derived(cellSize * gear.size);
 </script>

@@ -34,4 +34,4 @@
   let currentFrame: Asset = $derived(frameImages[frameIndex]);
 </script>
 
-<img class="pixelated" src={currentFrame} alt="Gear" style="width: {size}px; height: {size}px" />
+<img class="pixelated" draggable="false" src={currentFrame} alt="Gear" style="width: {size}px; height: {size}px" />

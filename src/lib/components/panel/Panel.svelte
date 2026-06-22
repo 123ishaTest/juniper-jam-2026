@@ -4,18 +4,19 @@
 
   interface Props {
     children?: Snippet;
+    className?: string;
     /**
      * Fits the panel to the exact size of the border
      */
     snug?: boolean;
   }
 
-  let { children, snug = false }: Props = $props();
+  let { children, snug = false, className }: Props = $props();
 
   let paddingClass = $derived(snug ? 'panel-snug' : 'p-6');
 </script>
 
-<div class="panel pixelated {paddingClass}">
+<div class="panel pixelated {paddingClass} {className}">
   {#if children}
     {@render children()}
   {/if}

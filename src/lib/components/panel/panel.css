@@ -1,8 +1,8 @@
 :root {
-  --panel: url('../../assets/panel.png');
-  --panel-slice-x: 8;
-  --panel-slice-y: 8;
-  --pixel-upscale: 4;
+  --panel: url('../../assets/serious-panel.png');
+  --panel-slice-x: 6;
+  --panel-slice-y: 6;
+  --pixel-upscale: 2;
 }
 
 .panel {

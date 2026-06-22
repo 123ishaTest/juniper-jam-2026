@@ -24,10 +24,10 @@
 </svelte:head>
 
 <LuiContext {config} {engine}>
-  <div class="p-4 h-screen w-full overflow-hidden select-none" style="background-image: url({background})">
+  <div
+    class="p-4 h-screen w-full overflow-hidden select-none bg-blend-hard-light"
+    style="background-image: url({background})"
+  >
     {@render children()}
   </div>
 </LuiContext>
-
-<style>
-</style>

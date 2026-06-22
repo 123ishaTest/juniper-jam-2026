@@ -10,7 +10,7 @@ export const engine = new LudiekEngine({
     { kind: 'game', schema: GameSchema },
     { kind: 'gear', schema: GearSchema },
   ],
-  debug: true,
+  debug: import.meta.env.MODE === 'development',
 });
 
 export const game = new LudiekGame(engine, {

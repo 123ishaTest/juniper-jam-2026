@@ -22,6 +22,10 @@ export class GameManager extends LudiekFeature<Dependencies> {
     completions: {},
   });
 
+  public update() {
+    this.scanForCompletions();
+  }
+
   // eslint-disable-next-line svelte/prefer-svelte-reactivity
   public completeGames(gameId: GameId, timestamp: Date = new Date()): void {
     if (this.isCompleted(gameId)) {

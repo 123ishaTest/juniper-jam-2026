@@ -1,0 +1,17 @@
+:root {
+  --progress-indigo: url('gradient-indigo.png');
+  --panel-slice-x: 6;
+  --panel-slice-y: 6;
+  --pixel-upscale: 2;
+}
+
+.progress {
+  background-image: var(--progress-bar);
+  background-repeat: repeat;
+  background-size: 100% 100%;
+}
+
+/* Variants */
+.progress-indigo {
+  --progress-bar: var(--progress-indigo);
+}

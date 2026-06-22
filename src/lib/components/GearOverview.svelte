@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Panel from '$lib/components/panel/Panel.svelte';
   import { engine } from '$lib/game/game.svelte';
   import GearGameDisplay from '$lib/components/GearGameDisplay.svelte';
+  import ProgressBar from '$lib/components/progress-bar/ProgressBar.svelte';
 
   let gameManager = $derived(engine.features.gameManager);
   let gearGrid = $derived(engine.features.gearGrid);
@@ -11,15 +11,19 @@
 
   let gamesCompleted = $derived(gameManager.gamesCompleted);
   let totalGames = $derived(gameManager.gameCount);
+  let progress = $derived(gamesCompleted / totalGames);
 </script>
 
-<div class="flex h-full">
-  <Panel>
-    <div class="flex flex-col space-y-2">
-      <p>Games completed: {gamesCompleted}/{totalGames}</p>
-      {#each gears as gear (gear.id)}
-        <GearGameDisplay {gear} />
-      {/each}
-    </div>
-  </Panel>
+<div class="flex flex-col h-full lg:w-min-[128]">
+  <div class="flex flex-row w-full mb-8">
+    <ProgressBar {progress}>
+      <span class="font-primary">{gamesCompleted}/{totalGames} Games completed</span>
+    </ProgressBar>
+  </div>
+
+  <div class="flex flex-col space-y-2 overflow-y-scroll">
+    {#each gears as gear (gear.id)}
+      <GearGameDisplay {gear} />
+    {/each}
+  </div>
 </div>
