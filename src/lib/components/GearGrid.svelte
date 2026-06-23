@@ -43,14 +43,21 @@
       {#each rows as tile, x (x)}
         <div
           class="flex flex-col items-center justify-center"
-          {@attach createDroppable({ id: `peg/${x}/${y}}`, data: { x, y } }).attach}
+          {@attach !tile.isFixed && createDroppable({ id: `peg/${x}/${y}}`, data: { x, y } }).attach}
         >
-          <img class="pixelated h-4 w-4" src={peg} alt="Peg" />
-
+          {#if tile.isVisible}
+            <img class="pixelated h-4 w-4" src={peg} alt="Peg" />
+          {/if}
           {#if tile.gear}
             <div class="absolute">
               <!-- TODO(@Isha): Add flexible gears-->
-              <DraggableGear fps={6} gearId={tile.gear} {cellSize} />
+              <DraggableGear
+                isReversed={tile.isReversed}
+                speed={tile.speed}
+                gearId={tile.gear}
+                {cellSize}
+                isDraggable={!tile.isFixed}
+              />
             </div>
           {/if}
         </div>

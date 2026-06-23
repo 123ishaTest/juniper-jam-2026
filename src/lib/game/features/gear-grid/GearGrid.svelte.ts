@@ -5,10 +5,16 @@ export interface GearState {
   x: number;
   y: number;
   gear: GearId | null;
+  isVisible: boolean;
+  isFixed: boolean;
+  isSource?: boolean;
+  speed: number;
+  isReversed: boolean;
 }
 
 export interface GearGridState {
   grid: GearState[][];
+  connections: { from: GearState; to: GearState }[];
 }
 
 type Dependencies = {
@@ -18,11 +24,12 @@ type Dependencies = {
 export class GearGrid extends LudiekFeature<Dependencies> {
   public readonly type = 'gearGrid';
 
-  public readonly HEIGHT = 10;
-  public readonly WIDTH = 10;
+  public readonly HEIGHT = 11;
+  public readonly WIDTH = 11;
 
   protected _state: GearGridState = $state({
     grid: [],
+    connections: [],
   });
 
   initialize() {
@@ -30,19 +37,66 @@ export class GearGrid extends LudiekFeature<Dependencies> {
     for (let y = 0; y < this.HEIGHT; y++) {
       const row: GearState[] = [];
       for (let x = 0; x < this.WIDTH; x++) {
+        const isGridTile = x > 0 && x < this.WIDTH - 1 && y > 0 && y < this.HEIGHT - 1;
         row.push({
           x,
           y,
           gear: null,
+          isVisible: isGridTile,
+          isFixed: !isGridTile,
+          speed: 0,
+          isReversed: false,
         });
       }
       this._state.grid.push(row);
     }
-    console.log('initalized', this._state.grid.length);
+
+    const middleX = Math.floor((this.WIDTH - 1) / 2);
+    const middleY = Math.floor((this.HEIGHT - 1) / 2);
+
+    this.grid[middleY][0] = {
+      x: 0,
+      y: middleY,
+      gear: '/gear/source',
+      isVisible: true,
+      isFixed: true,
+      isSource: true,
+      speed: 100,
+      isReversed: false,
+    };
+    this.grid[middleY][this.WIDTH - 1].isVisible = true;
+    this.grid[0][middleX].isVisible = true;
+    this.grid[this.HEIGHT - 1][middleX].isVisible = true;
+  }
+
+  public update(): void {
+    this.onGearMoved();
+  }
+
+  public onGearMoved(): void {
+    this.calculateTree();
+    this.setSpeeds();
+  }
+
+  public setSpeeds(): void {
+    this.placedGears.forEach((gear) => {
+      if (!gear.isSource) {
+        gear.speed = 0;
+      }
+    });
+    this._state.connections.forEach((connection) => {
+      connection.to.speed = connection.from.speed;
+      connection.to.isReversed = !connection.from.isReversed;
+    });
   }
 
   public placeGear(x: number, y: number, gearId: GearId): void {
     this._state.grid[y][x].gear = gearId;
+  }
+
+  public get source(): GearState {
+    const middleY = Math.floor((this.HEIGHT - 1) / 2);
+    return this.grid[middleY][0];
   }
 
   public removeById(gearId: GearId): void {
@@ -53,6 +107,44 @@ export class GearGrid extends LudiekFeature<Dependencies> {
         }
       });
     });
+  }
+
+  public calculateTree(): void {
+    const connections: { from: GearState; to: GearState }[] = [];
+    const isTraversed: Record<GearId, boolean> = {};
+    const queue: GearState[] = [this.source];
+
+    while (queue.length) {
+      const current = queue.shift();
+      if (!current || !current.gear) {
+        console.warn('Invalid gear in queue, skipping', current);
+        continue;
+      }
+      isTraversed[current.gear] = true;
+
+      const currentDetail = this.getGearDetail(current.gear);
+
+      const connectedGears = this.placedGears.filter((gear) => {
+        if (!gear.gear || gear.gear === current.gear) {
+          return false;
+        }
+        const squaredDistance = Math.pow(gear.x - current.x, 2) + Math.pow(gear.y - current.y, 2);
+        const squaredReach = Math.pow(this.getGearDetail(gear.gear).size / 2 + currentDetail.size / 2, 2);
+        return Math.abs(squaredReach - squaredDistance) < 0.2;
+      });
+
+      connectedGears.forEach((gear) => {
+        if (!isTraversed[gear.gear as GearId]) {
+          connections.push({
+            from: current,
+            to: gear,
+          });
+          queue.push(gear);
+        }
+      });
+    }
+
+    this._state.connections = connections;
   }
 
   public removeGear(x: number, y: number): void {
@@ -92,8 +184,23 @@ export class GearGrid extends LudiekFeature<Dependencies> {
     return this._state.grid[y][x].gear;
   }
 
+  public getGearDetail(gearId: GearId): GearDetail {
+    return this.engine.contentManager.get(gearId, 'gear');
+  }
+
   public isPlaced(gearId: GearId): boolean {
     return this.grid.some((row) => row.some((tile) => tile.gear === gearId));
+  }
+
+  public get placedGears(): GearState[] {
+    return this.grid.flatMap((row) =>
+      row.flatMap((tile) => {
+        if (tile.gear) {
+          return [tile];
+        }
+        return [];
+      }),
+    );
   }
 
   public get gears(): GearDetail[] {
@@ -102,5 +209,10 @@ export class GearGrid extends LudiekFeature<Dependencies> {
 
   public get grid(): GearState[][] {
     return this._state.grid;
+  }
+
+  public load() {
+    // Don't load the grid
+    return;
   }
 }

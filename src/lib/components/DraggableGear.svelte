@@ -4,12 +4,14 @@
   import { engine } from '$lib/game/game.svelte';
 
   interface Props {
-    fps: number;
+    speed: number;
     cellSize: number;
     gearId: string;
+    isDraggable?: boolean;
+    isReversed?: boolean;
   }
 
-  let { fps, cellSize, gearId }: Props = $props();
+  let { speed, cellSize, gearId, isReversed = false, isDraggable = true }: Props = $props();
 
   let gear = $derived(engine.contentManager.get(gearId, 'gear'));
   const draggable = $derived(createDraggable({ id: gear.id }));
@@ -17,6 +19,6 @@
   let size = $derived(cellSize * gear.size);
 </script>
 
-<div class="cursor-grab" {@attach draggable.attach}>
-  <AnimatedGear {fps} frames={gear.frames} {size} />
+<div class="cursor-grab" {@attach isDraggable && draggable.attach}>
+  <AnimatedGear speed={speed / gear.size} src={gear.image} {size} {isReversed} />
 </div>

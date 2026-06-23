@@ -1,8 +1,4 @@
 id: /gear/blue
 game: /game/demo
 size: 1
-frames:
-  - bronze-a-0.png
-  - bronze-a-1.png
-  - bronze-a-2.png
-  - bronze-a-3.png
+image: bronze-a-0.png

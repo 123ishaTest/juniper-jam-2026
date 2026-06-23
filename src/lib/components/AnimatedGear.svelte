@@ -2,36 +2,40 @@
   import { type Asset } from '$app/types';
   import { onMount } from 'svelte';
   import { asset } from '$app/paths';
+  import { Tween } from 'svelte/motion';
 
   interface Props {
     size: number;
-    fps: number;
-    frames: Asset[];
+    src: Asset;
+    speed: number;
     isReversed?: boolean;
   }
 
-  let { size, fps, frames, isReversed = false }: Props = $props();
+  let { size, src, speed, isReversed = false }: Props = $props();
 
-  let frameImages = $derived(frames.map((f) => asset('/assets/gear/' + f)));
+  let image = $derived(asset('/assets/gear/' + src));
 
-  let frameIndex = $state(0);
-  let isPaused = $derived(fps === 0);
-  let delay = $derived(isPaused ? 1000 : 1000 / fps);
-  let delta = $derived(isPaused ? 0 : isReversed ? -1 : +1);
+  let rotation = new Tween(0, {
+    duration: 1000,
+  });
 
-  let timeOut: ReturnType<typeof setTimeout>;
-
-  const startAnimation = () => {
-    frameIndex = (frameIndex + delta + frameImages.length) % frameImages.length;
-    timeOut = setTimeout(startAnimation, delay);
-  };
+  let delta = $derived(isReversed ? -speed : speed);
 
   onMount(() => {
-    startAnimation();
+    const interval = setInterval(() => {
+      rotation.target += delta;
+    }, 1000);
 
-    return () => clearTimeout(timeOut);
+    return () => {
+      clearInterval(interval);
+    };
   });
-  let currentFrame: Asset = $derived(frameImages[frameIndex]);
 </script>
 
-<img class="pixelated" draggable="false" src={currentFrame} alt="Gear" style="width: {size}px; height: {size}px" />
+<img
+  class="pixelated"
+  draggable="false"
+  src={image}
+  alt="Gear"
+  style="width: {size}px; height: {size}px; transform:rotate({rotation.current}deg);"
+/>

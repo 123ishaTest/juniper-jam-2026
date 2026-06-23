@@ -3,10 +3,10 @@ import { ref } from '@123ishatest/louter';
 
 export const GearSchema = z.strictObject({
   id: z.string(),
-  game: ref('game'),
+  game: z.optional(ref('game')),
 
   size: z.number(),
-  frames: z.array(z.string()),
+  image: z.string(),
 });
 
 export type GearDetail = z.infer<typeof GearSchema>;

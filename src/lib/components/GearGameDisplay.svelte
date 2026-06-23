@@ -5,6 +5,7 @@
   import AnimatedGear from '$lib/components/AnimatedGear.svelte';
   import { createDroppable } from '@dnd-kit/svelte';
   import Panel from '$lib/components/panel/Panel.svelte';
+  import type { GameId } from '$lib/game/features/game-manager/Game.content';
 
   interface Props {
     gear: GearDetail;
@@ -14,11 +15,11 @@
   let gearGrid = $derived(engine.features.gearGrid);
   let gameManager = $derived(engine.features.gameManager);
 
-  let isUnlocked = $derived(gameManager.isCompleted(gear.game));
+  let isUnlocked = $derived(gameManager.isCompleted(gear.game as GameId));
 
   const defaultSize = 48;
 
-  let game = $derived(engine.contentManager.get(gear.game, 'game'));
+  let game = $derived(engine.contentManager.get(gear.game as GameId, 'game'));
 </script>
 
 <div class="w-full">
@@ -27,10 +28,10 @@
       {#if isUnlocked}
         {#if !gearGrid.isPlaced(gear.id)}
           <!-- Ugly ugly hack -->
-          <DraggableGear fps={0} gearId={gear.id} cellSize={defaultSize / gear.size} />
+          <DraggableGear speed={0} gearId={gear.id} cellSize={defaultSize / gear.size} />
         {:else}
           <div class="disabled grayscale-100 opacity-25" {@attach createDroppable({ id: `cancel${gear.id}` }).attach}>
-            <AnimatedGear fps={0} frames={gear.frames} size={defaultSize} />
+            <AnimatedGear speed={0} src={gear.image} size={defaultSize} />
           </div>
         {/if}
       {/if}

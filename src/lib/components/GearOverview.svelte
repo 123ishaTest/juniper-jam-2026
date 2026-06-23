@@ -2,6 +2,9 @@
   import { engine } from '$lib/game/game.svelte';
   import GearGameDisplay from '$lib/components/GearGameDisplay.svelte';
   import ProgressBar from '$lib/components/progress-bar/ProgressBar.svelte';
+  import ResetSaveToolbarEntry from '$lib/debug/ResetSaveToolbarEntry.svelte';
+  import ResetGamesToolbarEntry from '$lib/debug/ResetGamesToolbarEntry.svelte';
+  import ManualScanToolbarEntry from '$lib/debug/ManualScanToolbarEntry.svelte';
 
   let gameManager = $derived(engine.features.gameManager);
   let gearGrid = $derived(engine.features.gearGrid);
@@ -23,7 +26,16 @@
 
   <div class="flex flex-col space-y-2 overflow-y-scroll">
     {#each gears as gear (gear.id)}
-      <GearGameDisplay {gear} />
+      {#if gear.game}
+        <GearGameDisplay {gear} />
+      {/if}
     {/each}
+  </div>
+
+  <div class="grow"></div>
+  <div class="flex flex-row space-x-2">
+    <ResetSaveToolbarEntry />
+    <ResetGamesToolbarEntry />
+    <ManualScanToolbarEntry />
   </div>
 </div>
