@@ -37,16 +37,16 @@
       {/if}
     </div>
 
-    <Panel --pixel-upscale={1} className="w-full hover:bg-red-600">
-      <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-      <a href={game.url} target="_blank" class="w-full">
+    <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+    <a href={game.url} target="_blank" class="w-full">
+      <Panel --pixel-upscale={1} className="w-full hover:bg-red-600 ">
         <div class="font-primary text-xl">
           <div class="flex flex-col">
             <h2 class="text-md lg:text-xl font-primary">{game.title}</h2>
             <h2 class="text-xs lg:text-sm font-primary max-w-96">{game.description}</h2>
           </div>
         </div>
-      </a>
-    </Panel>
+      </Panel>
+    </a>
   </div>
 </div>
