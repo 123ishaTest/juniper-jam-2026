@@ -29,20 +29,16 @@
     const gearId = source.id;
     const targetId = target.id;
 
-    console.log(gearId, targetId);
     if (targetId.startsWith('cancel')) {
       engine.features.gearGrid.removeById(gearId);
       return;
     }
 
-    console.log(event.operation.source);
     const x = event.operation.target.data.x;
     const y = event.operation.target.data.y;
-    console.log(x, y);
+
     engine.features.gearGrid.removeById(gearId);
     engine.features.gearGrid.placeGear(x, y, gearId);
-
-    console.log(targetId);
   }
 </script>
 

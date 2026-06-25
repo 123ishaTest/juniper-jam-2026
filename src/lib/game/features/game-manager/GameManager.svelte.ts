@@ -47,13 +47,13 @@ export class GameManager extends LudiekFeature<Dependencies> {
   }
 
   public scanLocalStorage(game: GameDetail): void {
-    console.log(`Scanning game '${game.id}' with key '${game.saveKey}'`);
     const data = localStorage.getItem(game.saveKey);
     if (!data) {
       return;
     }
 
     console.log(`${game.id}: Found data ${data}`);
+
     // eslint-disable-next-line svelte/prefer-svelte-reactivity
     const date = new Date(data);
     this.completeGames(game.id, date);

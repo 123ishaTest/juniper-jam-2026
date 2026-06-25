@@ -15,7 +15,6 @@
 
     const { width, height } = container.getBoundingClientRect();
 
-    console.log(height);
     cellSize = Math.floor(Math.min(width / gearGrid.WIDTH, height / gearGrid.HEIGHT));
   }
 
