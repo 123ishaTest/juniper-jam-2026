@@ -1,6 +1,6 @@
 <script lang="ts">
   import './layout.css';
-  import favicon from '$lib/assets/favicon.svg';
+  import favicon from '$lib/assets/favicon.png';
   import { LuiConfigBuilder, LuiContext } from '@123ishatest/lui';
   import { engine } from '$lib/game/game.svelte';
 
