@@ -3,9 +3,10 @@ import { GameSchema } from '$lib/game/features/game-manager/Game.content';
 import { GameManager } from '$lib/game/features/game-manager/GameManager.svelte';
 import { GearGrid } from '$lib/game/features/gear-grid/GearGrid.svelte';
 import { GearSchema } from '$lib/game/features/gear-grid/Gear.content';
+import { Statistics } from '$lib/game/features/statistics/Statistics.svelte.js';
 
 export const engine = new LudiekEngine({
-  features: [new GameManager(), new GearGrid()],
+  features: [new GameManager(), new GearGrid(), new Statistics()],
   content: [
     { kind: 'game', schema: GameSchema },
     { kind: 'gear', schema: GearSchema },

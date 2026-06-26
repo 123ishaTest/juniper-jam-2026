@@ -27,13 +27,18 @@ export class GameManager extends LudiekFeature<Dependencies> {
   }
 
   // eslint-disable-next-line svelte/prefer-svelte-reactivity
-  public completeGames(gameId: GameId, timestamp: Date = new Date()): void {
+  public completeGame(gameId: GameId, timestamp: Date = new Date()): void {
     if (this.isCompleted(gameId)) {
       return;
     }
     this._state.completions[gameId] = {
       timestamp,
     };
+
+    const game = this.engine.contentManager.get(gameId, 'game');
+    this._onGameCompleted.dispatch({
+      game,
+    });
   }
 
   public scanForCompletions(): void {
@@ -56,7 +61,7 @@ export class GameManager extends LudiekFeature<Dependencies> {
 
     // eslint-disable-next-line svelte/prefer-svelte-reactivity
     const date = new Date(data);
-    this.completeGames(game.id, date);
+    this.completeGame(game.id, date);
   }
 
   /**
@@ -92,7 +97,7 @@ export class GameManager extends LudiekFeature<Dependencies> {
   protected _onGameCompleted = new SimpleEventDispatcher<GameCompletedEvent>();
 
   /**
-   * Emitted when bronze-a floor is completed
+   * Emitted when a game is completed
    */
   public get onGameCompleted(): ISimpleEvent<GameCompletedEvent> {
     return this._onGameCompleted.asEvent();

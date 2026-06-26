@@ -47,6 +47,7 @@
     "@123ishatest/ludiek": "^0.9.6",
     "@123ishatest/lui": "^1.0.6",
     "@dnd-kit/svelte": "^0.5.0",
+    "firebase": "^12.15.0",
     "strongly-typed-events": "^3.0.11"
   }
 }
