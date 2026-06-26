@@ -3,7 +3,6 @@
 
   import github from '$lib/assets/icons/github.svg';
   import discord from '$lib/assets/icons/discord.svg';
-  import patreon from '$lib/assets/icons/patreon.svg';
   import ludiek from '$lib/assets/icons/ludiek.png';
 </script>
 
@@ -30,9 +29,6 @@
       </a>
       <a href="https://discord.gg/3DRMj55yQP" target="_blank">
         <img class="w-6" src={discord} alt="Discord" />
-      </a>
-      <a href="https://www.patreon.com/123ishatest" target="_blank">
-        <img class="w-6" src={patreon} alt="Patreon" />
       </a>
     </div>
   </div>
