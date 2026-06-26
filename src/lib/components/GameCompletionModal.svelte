@@ -2,12 +2,14 @@
   import Modal from '$lib/components/Modal.svelte';
   import { onMount } from 'svelte';
   import { engine } from '$lib/game/game.svelte';
+  import { gameCompletedSound } from '$lib/audio';
 
   let showModal = $state(false);
 
   onMount(() => {
     return engine.features.gearGrid.onMetaGameCompleted.subscribe(() => {
       showModal = true;
+      gameCompletedSound.play();
     });
   });
 </script>
@@ -19,19 +21,6 @@
     <p class="font-primary text-md">Massive thanks to all the devs who allowed me to showcase their game</p>
     <br />
     <p class="font-primary text-md">- Isha</p>
-    <br />
-
-    <!--    <div class="flex flex-row space-x-4">-->
-    <!--      <a href="https://github.com/123ishaTest/ludiek" target="_blank">-->
-    <!--        <img class="w-6" src={asset('/icons/github.svg')} alt="Github" />-->
-    <!--      </a>-->
-    <!--      <a href="https://discord.gg/GVGEAM5jbf" target="_blank">-->
-    <!--        <img class="w-6" src={asset('/icons/discord.svg')} alt="Discord" />-->
-    <!--      </a>-->
-    <!--      <a href="https://patreon.com/123ishaTest" target="_blank">-->
-    <!--        <img class="w-6" src={asset('/icons/patreon.svg')} alt="Patreon" />-->
-    <!--      </a>-->
-    <!--    </div>-->
     <br />
   </div>
 </Modal>

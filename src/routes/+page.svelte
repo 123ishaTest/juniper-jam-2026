@@ -6,6 +6,7 @@
   import Panel from '$lib/components/panel/Panel.svelte';
   import GearOverview from '$lib/components/GearOverview.svelte';
   import GameCompletionModal from '$lib/components/GameCompletionModal.svelte';
+  import { gameUnlockSound, pickupSound, shufflePickupSound } from '$lib/audio';
 
   let { data } = $props();
 
@@ -13,9 +14,20 @@
   engine.contentManager.load(data);
 
   onMount(() => {
-    // TODO(@Isha): Consider if we even want to support saving?
     game.start();
+    const unsub = game.engine.features.gameManager.onGameCompleted.subscribe(() => {
+      gameUnlockSound.stop();
+      gameUnlockSound.play();
+    });
+    return () => {
+      unsub();
+    };
   });
+
+  function onDragStart() {
+    shufflePickupSound();
+    pickupSound.play();
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function onDragEnd(event: any) {
@@ -26,6 +38,8 @@
     if (!source || !target) {
       return;
     }
+
+    pickupSound.play();
 
     const gearId = source.id;
     const targetId = target.id;
@@ -43,7 +57,7 @@
   }
 </script>
 
-<DragDropProvider {onDragEnd}>
+<DragDropProvider {onDragStart} {onDragEnd}>
   <div class="flex flex-col lg:flex-row h-full space-y-2 lg:space-y-0 lg:space-x-8 lg:pl-8">
     <Panel className="grow">
       <GearGrid />
