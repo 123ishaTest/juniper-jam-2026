@@ -5,6 +5,7 @@
   import { onMount } from 'svelte';
   import Panel from '$lib/components/panel/Panel.svelte';
   import GearOverview from '$lib/components/GearOverview.svelte';
+  import GameCompletionModal from '$lib/components/GameCompletionModal.svelte';
 
   let { data } = $props();
 
@@ -53,3 +54,5 @@
     </Panel>
   </div>
 </DragDropProvider>
+
+<GameCompletionModal />

@@ -1,5 +1,6 @@
 import { LudiekFeature } from '@123ishatest/ludiek';
 import type { GearContent, GearDetail, GearId } from '$lib/game/features/gear-grid/Gear.content';
+import { type ISignal, SignalDispatcher } from 'strongly-typed-events';
 
 export interface GearState {
   x: number;
@@ -16,6 +17,7 @@ export interface GearGridState {
   grid: GearState[][];
   connections: { from: GearState; to: GearState }[];
   allGoalsSpinning: boolean;
+  isGameCompleted: boolean;
 }
 
 type Dependencies = {
@@ -32,6 +34,7 @@ export class GearGrid extends LudiekFeature<Dependencies> {
     grid: [],
     connections: [],
     allGoalsSpinning: false,
+    isGameCompleted: false,
   });
 
   initialize() {
@@ -107,6 +110,11 @@ export class GearGrid extends LudiekFeature<Dependencies> {
     if (this._state.allGoalsSpinning) {
       // eslint-disable-next-line svelte/prefer-svelte-reactivity
       localStorage.setItem('123ishatest/metagame', new Date().toJSON());
+
+      if (!this._state.isGameCompleted) {
+        this._state.isGameCompleted = true;
+        this._onMetaGameCompleted.dispatch();
+      }
     }
   }
 
@@ -232,5 +240,15 @@ export class GearGrid extends LudiekFeature<Dependencies> {
   public load() {
     // Don't load the grid
     return;
+  }
+
+  // Events
+  protected _onMetaGameCompleted = new SignalDispatcher();
+
+  /**
+   * Emitted when the metagame is completed
+   */
+  public get onMetaGameCompleted(): ISignal {
+    return this._onMetaGameCompleted.asEvent();
   }
 }
