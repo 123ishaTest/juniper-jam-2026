@@ -24,7 +24,7 @@
     <br />
     <p class="font-primary text-sm">
       PS. Don't forget to
-      <a href="https://itch.io/jam/theveryseriousjuniperdevgamejam/submissions" target="_blank" class="underline"
+      <a href="https://itch.io/jam/theveryseriousjuniperdevgamejam/entries" target="_blank" class="underline"
         >play other games too</a
       >
     </p>

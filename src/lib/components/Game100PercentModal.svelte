@@ -22,7 +22,7 @@
     <h2 class="font-primary text-lg">You have completed all the games!</h2>
     <p class="font-primary text-sm">
       Luckily there are
-      <a href="https://itch.io/jam/theveryseriousjuniperdevgamejam/submissions" target="_blank" class="underline"
+      <a href="https://itch.io/jam/theveryseriousjuniperdevgamejam/entries" target="_blank" class="underline"
         >way more games to play!</a
       >
     </p>
