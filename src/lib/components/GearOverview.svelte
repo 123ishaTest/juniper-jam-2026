@@ -4,6 +4,7 @@
   import ProgressBar from '$lib/components/progress-bar/ProgressBar.svelte';
   import CreditsBar from '$lib/components/CreditsBar.svelte';
   import { shuffle } from '@123ishatest/ludiek';
+
   let gameManager = $derived(engine.features.gameManager);
   let gearGrid = $derived(engine.features.gearGrid);
 
@@ -24,7 +25,11 @@
     </ProgressBar>
   </div>
 
-  <p class="font-primary text-center">Drag the gears to make the hats spin!</p>
+  <p class="font-primary text-center">
+    Play other games to earn gears!
+    <br />
+    Drag the gears onto the grid!
+  </p>
 
   <div class="flex flex-col space-y-2 overflow-y-scroll">
     {#each shuffledGears as gear (gear.id)}
