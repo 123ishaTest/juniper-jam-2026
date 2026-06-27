@@ -30,7 +30,5 @@
     <h2 class="font-primary text-lg">Thank you for playing!</h2>
     <p class="font-primary text-md">- Isha</p>
     <br />
-
-    <br />
   </div>
 </Modal>
